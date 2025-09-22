@@ -64,7 +64,7 @@ internal class AlbumArtContentProvider : ContentProvider() {
         val remoteUri = uriMap[uri] ?: throw FileNotFoundException(uri.path ?: "Unknown path")
         
         // 通过context.cacheDir创建一个本地文件对象，用于缓存下载的专辑封面图像
-        var file = File(context.cacheDir, uri.path)
+        var file = File(context.cacheDir, uri.path ?: "unknown")
         
         // 如果文件不存在，则使用Glide下载远程URI指向的专辑封面图像，并将其作为文件保存
         if (!file.exists()) {
