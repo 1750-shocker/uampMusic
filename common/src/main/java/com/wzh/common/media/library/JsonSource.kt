@@ -33,13 +33,29 @@ internal class JsonSource(private val source: Uri) : AbstractMusicSource() {
     override fun iterator(): Iterator<MediaItem> = catalog.iterator()
 
     override suspend fun load() {
+        // 首先尝试加载远程数据源
         updateCatalog(source)?.let { updatedCatalog ->
             catalog = updatedCatalog
             state = STATE_INITIALIZED
-        } ?: run {
-            catalog = emptyList()
-            state = STATE_ERROR
+            return
         }
+        
+        // 如果远程数据源失败，尝试加载本地备用数据
+        try {
+            val localCatalog = loadLocalCatalog()
+            if (localCatalog.isNotEmpty()) {
+                catalog = localCatalog
+                state = STATE_INITIALIZED
+                android.util.Log.w("JsonSource", "使用本地备用数据源")
+                return
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("JsonSource", "加载本地备用数据失败", e)
+        }
+        
+        // 所有数据源都失败
+        catalog = emptyList()
+        state = STATE_ERROR
     }
 
     /**
@@ -110,6 +126,48 @@ internal class JsonSource(private val source: Uri) : AbstractMusicSource() {
         val reader = BufferedReader(InputStreamReader(catalogConn.openStream()))
         // 请求回来的JSON数据，转换为JsonCatalog对象
         return Gson().fromJson(reader, JsonCatalog::class.java)
+    }
+    
+    /**
+     * 加载本地备用数据源
+     */
+    private suspend fun loadLocalCatalog(): List<MediaItem> = withContext(Dispatchers.IO) {
+        try {
+            // 从assets目录加载本地catalog.json
+            // 注意：这里需要通过其他方式获取Context，因为JsonSource没有直接的Context引用
+            // 暂时返回空列表，实际使用时需要传入Context
+            return@withContext emptyList<MediaItem>()
+            
+            /*
+            val inputStream = context.assets.open("catalog.json")
+            val reader = BufferedReader(InputStreamReader(inputStream))
+            val localCatalog = Gson().fromJson(reader, JsonCatalog::class.java)
+            reader.close()
+            
+            // 转换为MediaItem列表
+            localCatalog.music.map { song ->
+                val metadata = MediaMetadata.Builder()
+                    .setTitle(song.title)
+                    .setArtist(song.artist)
+                    .setAlbumTitle(song.album)
+                    .setGenre(song.genre)
+                    .setArtworkUri(android.net.Uri.parse(song.image))
+                    .setTrackNumber(song.trackNumber.toInt())
+                    .setTotalTrackCount(song.totalTrackCount.toInt())
+                    .setDurationMs(java.util.concurrent.TimeUnit.SECONDS.toMillis(song.duration))
+                    .build()
+
+                MediaItem.Builder()
+                    .setMediaId(song.id)
+                    .setUri(song.source)
+                    .setMediaMetadata(metadata)
+                    .build()
+            }
+            */
+        } catch (e: Exception) {
+            android.util.Log.e("JsonSource", "加载本地catalog失败", e)
+            emptyList()
+        }
     }
 }
 

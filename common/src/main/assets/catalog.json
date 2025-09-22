@@ -1,0 +1,43 @@
+{
+  "music": [
+    {
+      "id": "local_sample_1",
+      "title": "Sample Song 1",
+      "album": "Sample Album",
+      "artist": "Sample Artist",
+      "genre": "Pop",
+      "source": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+      "image": "https://via.placeholder.com/300x300/FF6B6B/FFFFFF?text=Sample+1",
+      "trackNumber": 1,
+      "totalTrackCount": 3,
+      "duration": 180,
+      "site": "SoundHelix"
+    },
+    {
+      "id": "local_sample_2", 
+      "title": "Sample Song 2",
+      "album": "Sample Album",
+      "artist": "Sample Artist",
+      "genre": "Rock",
+      "source": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+      "image": "https://via.placeholder.com/300x300/4ECDC4/FFFFFF?text=Sample+2",
+      "trackNumber": 2,
+      "totalTrackCount": 3,
+      "duration": 200,
+      "site": "SoundHelix"
+    },
+    {
+      "id": "local_sample_3",
+      "title": "Sample Song 3", 
+      "album": "Sample Album",
+      "artist": "Sample Artist",
+      "genre": "Jazz",
+      "source": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+      "image": "https://via.placeholder.com/300x300/45B7D1/FFFFFF?text=Sample+3",
+      "trackNumber": 3,
+      "totalTrackCount": 3,
+      "duration": 220,
+      "site": "SoundHelix"
+    }
+  ]
+}
