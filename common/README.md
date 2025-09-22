@@ -1,0 +1,126 @@
+# Common Module - 音乐数据源
+
+这个模块包含了音乐应用的通用组件，特别是用于从JSON文件加载音乐数据的`JsonSource`。
+
+## 主要组件
+
+### JsonSource
+从远程JSON文件加载音乐目录的数据源类。
+
+**特性：**
+- 支持从网络URL加载JSON音乐目录
+- 自动处理相对路径转换为绝对路径
+- 集成专辑封面ContentProvider
+- 基于Media3的MediaItem格式
+- 协程支持的异步加载
+
+### MusicRepository
+音乐数据仓库，提供状态管理和数据访问。
+
+**特性：**
+- StateFlow状态管理
+- 加载状态跟踪
+- 错误处理
+- 根据ID查找音乐项
+
+### AlbumArtContentProvider
+专辑封面内容提供者，将网络图片URI转换为content://形式。
+
+**特性：**
+- 网络图片缓存
+- Content Provider接口
+- 支持ExoPlayer和通知系统
+
+## 使用方法
+
+### 1. 基本使用
+
+```kotlin
+// 创建仓库实例
+val repository = MusicRepository()
+
+// 加载音乐数据
+repository.loadMusicFromJson("https://example.com/music/catalog.json")
+
+// 监听数据变化
+repository.musicItems.collect { musicItems ->
+    // 处理音乐列表
+}
+```
+
+### 2. 直接使用JsonSource
+
+```kotlin
+val jsonUri = Uri.parse("https://example.com/music/catalog.json")
+val jsonSource = JsonSource(jsonUri)
+
+// 加载数据
+jsonSource.load()
+
+// 遍历音乐项
+for (mediaItem in jsonSource) {
+    println("${mediaItem.mediaMetadata.title} - ${mediaItem.mediaMetadata.artist}")
+}
+```
+
+### 3. JSON格式要求
+
+```json
+{
+  "music": [
+    {
+      "id": "1",
+      "title": "歌曲标题",
+      "artist": "艺术家",
+      "album": "专辑名称",
+      "genre": "流行",
+      "source": "https://example.com/music/song1.mp3",
+      "image": "https://example.com/images/album1.jpg",
+      "trackNumber": 1,
+      "totalTrackCount": 12,
+      "duration": 240,
+      "site": "example.com"
+    }
+  ]
+}
+```
+
+## 依赖
+
+- Media3 (ExoPlayer, UI, Common, Session)
+- Kotlin Coroutines
+- Gson (JSON解析)
+
+## 权限要求
+
+在AndroidManifest.xml中需要以下权限：
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+```
+
+## ContentProvider注册
+
+AlbumArtContentProvider已在模块的AndroidManifest.xml中注册：
+
+```xml
+<provider
+    android:name=".media.library.AlbumArtContentProvider"
+    android:authorities="com.wzh.uampmusic.albumart"
+    android:exported="false" />
+```
+
+## 从旧版本迁移
+
+这个实现是从基于ExoPlayer v2和MediaBrowserCompat的旧版本重写而来，主要变化：
+
+1. **MediaMetadataCompat** → **MediaItem + MediaMetadata**
+2. **MediaBrowserCompat.MediaItem** → **MediaItem**
+3. **支持v4媒体库** → **Media3库**
+4. 保持了相同的JSON格式兼容性
+5. 保持了相同的功能特性
+
+## 示例
+
+查看 `JsonSourceExample.kt` 文件获取完整的使用示例。
