@@ -65,7 +65,7 @@ class JsonSourceExample {
         
         // 检查状态
         when (jsonSource.state) {
-            AbstractMusicSource.STATE_INITIALIZED -> {
+            STATE_INITIALIZED -> {
                 println("JsonSource加载成功")
                 // 遍历音乐项
                 for (mediaItem in jsonSource) {
@@ -77,7 +77,7 @@ class JsonSourceExample {
                     println("---")
                 }
             }
-            AbstractMusicSource.STATE_ERROR -> {
+            STATE_ERROR -> {
                 println("JsonSource加载失败")
             }
             else -> {

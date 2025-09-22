@@ -35,10 +35,10 @@ class MusicRepository {
             musicSource?.load()
             
             when (musicSource?.state) {
-                AbstractMusicSource.STATE_INITIALIZED -> {
+                STATE_INITIALIZED -> {
                     _musicItems.value = musicSource?.toList() ?: emptyList()
                 }
-                AbstractMusicSource.STATE_ERROR -> {
+                STATE_ERROR -> {
                     _error.value = "Failed to load music from $jsonUrl"
                 }
             }

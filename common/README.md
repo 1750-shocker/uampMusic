@@ -14,6 +14,16 @@
 - 基于Media3的MediaItem格式
 - 协程支持的异步加载
 
+### MusicSource & AbstractMusicSource
+音乐数据源接口和抽象基类，提供统一的数据访问接口。
+
+**特性：**
+- 基于状态的生命周期管理（创建→初始化中→已初始化/错误）
+- 回调机制：whenReady()支持多监听器注册
+- 线程安全的状态变更通知
+- 支持搜索功能
+- 实现Iterable接口，支持for-in遍历
+
 ### MusicRepository
 音乐数据仓库，提供状态管理和数据访问。
 
@@ -66,12 +76,22 @@ repository.musicItems.collect { musicItems ->
 val jsonUri = Uri.parse("https://example.com/music/catalog.json")
 val jsonSource = JsonSource(jsonUri)
 
-// 加载数据
-jsonSource.load()
+// 注册回调监听器
+jsonSource.whenReady { success ->
+    if (success) {
+        println("数据加载成功！")
+        // 遍历音乐项
+        for (mediaItem in jsonSource) {
+            println("${mediaItem.mediaMetadata.title} - ${mediaItem.mediaMetadata.artist}")
+        }
+    } else {
+        println("数据加载失败")
+    }
+}
 
-// 遍历音乐项
-for (mediaItem in jsonSource) {
-    println("${mediaItem.mediaMetadata.title} - ${mediaItem.mediaMetadata.artist}")
+// 异步加载数据
+CoroutineScope(Dispatchers.Main).launch {
+    jsonSource.load()
 }
 ```
 

@@ -103,6 +103,13 @@ class BrowseTreeExample(private val context: Context) {
 /**
  * 简单的音乐源实现，用于BrowseTree
  */
-private class SimpleMusicSource(private val items: List<MediaItem>) : MusicSource {
+private class SimpleMusicSource(private val items: List<MediaItem>) : AbstractMusicSource() {
     override fun iterator(): Iterator<MediaItem> = items.iterator()
+    
+    override suspend fun load() {
+        state = STATE_INITIALIZING
+        // 模拟加载过程
+        kotlinx.coroutines.delay(100)
+        state = STATE_INITIALIZED
+    }
 }
