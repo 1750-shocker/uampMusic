@@ -2,6 +2,32 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Media3 音频播放所需权限 -->
+    <!-- 网络权限：用于从网络加载音频文件 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <!-- 网络状态权限：用于检查网络连接状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <!-- 前台服务权限：用于音频播放服务 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    
+    <!-- 媒体前台服务权限 (Android 14+) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    
+    <!-- 唤醒锁权限：防止播放时设备休眠 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    
+    <!-- 音频焦点权限：管理音频焦点 -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    
+    <!-- 读取外部存储权限：访问本地音频文件 (可选) -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" 
+        android:maxSdkVersion="32" />
+    
+    <!-- 读取媒体音频权限 (Android 13+) -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -23,6 +49,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Media3 音乐播放服务 -->
+        <service
+            android:name="com.wzh.common.media.MusicService"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaLibraryService" />
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
+
+        <!-- AlbumArt内容提供者 -->
+        <provider
+            android:name="com.wzh.common.media.library.AlbumArtContentProvider"
+            android:authorities="${applicationId}.albumart"
+            android:exported="false"
+            android:grantUriPermissions="true" />
     </application>
 
 </manifest>
