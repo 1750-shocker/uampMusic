@@ -27,9 +27,12 @@
 专辑封面内容提供者，将网络图片URI转换为content://形式。
 
 **特性：**
-- 网络图片缓存
-- Content Provider接口
-- 支持ExoPlayer和通知系统
+- 使用Glide进行智能图片下载和缓存
+- 支持超时机制（30秒）保证用户体验
+- Content Provider接口，与Android系统完美集成
+- 支持ExoPlayer、通知系统、Android Auto等
+- 提供稳定的URI引用，隐藏真实数据源
+- 自动处理权限控制和访问管理
 
 ### BrowseTree
 媒体浏览树，用于组织音乐内容的层次结构。
@@ -119,6 +122,7 @@ val albumItems = browseTree[UAMP_ALBUMS_ROOT]
 - Media3 (ExoPlayer, UI, Common, Session)
 - Kotlin Coroutines
 - Gson (JSON解析)
+- Glide (图片加载和缓存)
 
 ## 权限要求
 

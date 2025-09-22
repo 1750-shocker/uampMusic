@@ -50,6 +50,9 @@ dependencies {
     // Gson for JSON parsing
     implementation("com.google.code.gson:gson:2.10.1")
     
+    // Glide for image loading and caching
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
