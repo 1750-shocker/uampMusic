@@ -31,6 +31,15 @@
 - Content Provider接口
 - 支持ExoPlayer和通知系统
 
+### BrowseTree
+媒体浏览树，用于组织音乐内容的层次结构。
+
+**特性：**
+- 支持推荐、专辑、最近播放等分类浏览
+- 自动构建专辑层次结构
+- 基于Media3的MediaItem格式
+- 支持搜索功能
+
 ## 使用方法
 
 ### 1. 基本使用
@@ -63,7 +72,27 @@ for (mediaItem in jsonSource) {
 }
 ```
 
-### 3. JSON格式要求
+### 3. 使用BrowseTree
+
+```kotlin
+// 创建浏览树
+val browseTree = BrowseTree(
+    context = context,
+    musicSource = musicSource,
+    recentMediaId = "recent_song_id"
+)
+
+// 获取根节点内容
+val rootItems = browseTree[UAMP_BROWSABLE_ROOT]
+
+// 获取推荐内容
+val recommendedItems = browseTree[UAMP_RECOMMENDED_ROOT]
+
+// 获取专辑列表
+val albumItems = browseTree[UAMP_ALBUMS_ROOT]
+```
+
+### 4. JSON格式要求
 
 ```json
 {

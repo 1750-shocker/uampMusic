@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 媒体浏览分类标题 -->
+    <string name="recommended_title">推荐</string>
+    <string name="albums_title">专辑</string>
+    <string name="recent_title">最近播放</string>
+    
+    <!-- 通用字符串 -->
+    <string name="unknown_album">未知专辑</string>
+    <string name="unknown_artist">未知艺术家</string>
+</resources>
