@@ -53,6 +53,15 @@ dependencies {
     // Glide for image loading and caching
     implementation("com.github.bumptech.glide:glide:4.16.0")
     
+    // Additional Media3 dependencies for service
+    implementation("androidx.media3:media3-session:1.4.1")
+    
+    // Guava for ListenableFuture
+    implementation("com.google.guava:guava:32.1.3-android")
+    
+    // Kotlinx coroutines guava integration
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.7.3")
+    
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

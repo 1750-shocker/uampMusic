@@ -62,6 +62,17 @@
 - **PlayerExtensions**: Player状态检查和播放控制
 - **FileExtensions**: 文件到Content URI的转换
 
+### MusicService
+基于Media3的音乐服务，提供完整的媒体播放和浏览功能。
+
+**特性：**
+- 基于MediaLibraryService的现代化架构
+- 支持媒体浏览和搜索
+- 集成ExoPlayer进行音频播放
+- 自动处理系统媒体控制（锁屏、通知、蓝牙）
+- 支持Android Auto和其他车载系统
+- 协程驱动的异步数据加载
+
 ## 使用方法
 
 ### 1. 基本使用
