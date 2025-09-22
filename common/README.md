@@ -53,6 +53,15 @@
 - 基于Media3的MediaItem格式
 - 支持搜索功能
 
+### 扩展方法 (ext包)
+提供便捷的扩展方法，简化Media3 API的使用。
+
+**包含的扩展：**
+- **StringExtensions**: 字符串处理（URL编码、URI转换、大小写不敏感比较）
+- **MediaItemExtensions**: MediaItem和MediaMetadata的便捷访问和构建
+- **PlayerExtensions**: Player状态检查和播放控制
+- **FileExtensions**: 文件到Content URI的转换
+
 ## 使用方法
 
 ### 1. 基本使用
@@ -115,7 +124,30 @@ val recommendedItems = browseTree[UAMP_RECOMMENDED_ROOT]
 val albumItems = browseTree[UAMP_ALBUMS_ROOT]
 ```
 
-### 4. JSON格式要求
+### 4. 使用扩展方法
+
+```kotlin
+// 字符串扩展
+val title = "My Song"
+val encoded = title.urlEncoded
+val uri = "https://example.com/song.mp3".toUri()
+
+// MediaItem创建
+val playableItem = createPlayableMediaItem(
+    mediaId = "song1",
+    uri = Uri.parse("https://example.com/song.mp3"),
+    title = "歌曲标题",
+    artist = "艺术家",
+    album = "专辑"
+)
+
+// Player状态检查
+if (player.isPlaying) {
+    player.playPause()
+}
+```
+
+### 5. JSON格式要求
 
 ```json
 {
