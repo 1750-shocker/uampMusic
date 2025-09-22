@@ -11,13 +11,23 @@
   - 为pluginManagement和dependencyResolutionManagement分别配置仓库
   - _需求: 1.1, 1.2, 1.3, 1.4_
 
-- [ ] 2. 在版本目录中添加Media3依赖定义
+- [x] 2. 在版本目录中添加Media3依赖定义
+
+
+
+
+
   - 在gradle/libs.versions.toml中添加media3版本定义
   - 定义media3-exoplayer、media3-ui、media3-common、media3-session库引用
   - 确保版本统一管理和兼容性
   - _需求: 2.1, 2.2, 4.2_
 
-- [ ] 3. 集成Media3依赖到应用模块
+- [x] 3. 集成Media3依赖到应用模块
+
+
+
+
+
   - 在app/build.gradle.kts中添加Media3相关依赖引用
   - 使用版本目录中定义的库引用，避免硬编码版本号
   - 添加必要的实现依赖声明

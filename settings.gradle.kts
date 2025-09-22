@@ -51,4 +51,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "uampMusic"
 include(":app")
- 
+include(":common")
