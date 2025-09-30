@@ -17,6 +17,21 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        create("release") {
+            // 从 gradle.properties 文件中读取配置信息
+            val storeFile = project.property("MYAPP_RELEASE_STORE_FILE") as String
+            val storePassword = project.property("MYAPP_RELEASE_STORE_PASSWORD") as String
+            val keyAlias = project.property("MYAPP_RELEASE_KEY_ALIAS") as String
+            val keyPassword = project.property("MYAPP_RELEASE_KEY_PASSWORD") as String
+
+            // 使用 '=' 进行赋值
+            this.storeFile = file(storeFile)
+            this.storePassword = storePassword
+            this.keyAlias = keyAlias
+            this.keyPassword = keyPassword
+        }
+    }
 
     buildTypes {
         release {
@@ -25,6 +40,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            //把签名配置应用到 release 构建类型上
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
